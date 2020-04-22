@@ -1,6 +1,6 @@
 import 'package:covidtrackerflutter/data_source.dart';
 import 'package:flutter/material.dart';
-import 'package:covidtrackerflutter/home_page.dart';
+import 'package:covidtrackerflutter/pages/home_page.dart';
 import 'package:dynamic_theme/dynamic_theme.dart';
 
 void main() {

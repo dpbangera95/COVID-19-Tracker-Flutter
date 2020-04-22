@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:covidtrackerflutter/data_source.dart';
 
 class Search extends SearchDelegate {
   final List countryList;

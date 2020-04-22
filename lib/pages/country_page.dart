@@ -19,6 +19,10 @@ class _CountryPageState extends State<CountryPage> {
     });
   }
 
+  Future fetchData() async {
+    fetchCountryData();
+  }
+
   @override
   void initState() {
     fetchCountryData();
@@ -38,97 +42,100 @@ class _CountryPageState extends State<CountryPage> {
         ],
         title: Text('COUNTRY WISE STATISTICS'),
       ),
-      body: countryData == null
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : Scrollbar(
-              child: ListView.builder(
-                  itemCount: countryData == null ? 0 : countryData.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 10.0),
-                        height: 130,
-                        child: Row(
-                          children: <Widget>[
-                            Container(
-                              width: 200.0,
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 10.0,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text(
-                                    countryData[index]['country'],
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  Image.network(
-                                    countryData[index]['countryInfo']['flag'],
-                                    height: 50.0,
-                                    width: 60.0,
-                                  )
-                                ],
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
+      body: RefreshIndicator(
+        onRefresh: fetchData,
+        child: countryData == null
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Scrollbar(
+                child: ListView.builder(
+                    itemCount: countryData == null ? 0 : countryData.length,
+                    itemBuilder: (context, index) {
+                      return Card(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 10.0),
+                          height: 130,
+                          child: Row(
+                            children: <Widget>[
+                              Container(
+                                width: 200.0,
+                                margin: EdgeInsets.symmetric(
+                                  horizontal: 10.0,
+                                ),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      'CONFIRMED: ' +
-                                          countryData[index]['cases']
-                                              .toString(),
+                                      countryData[index]['country'],
                                       style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red,
-                                      ),
+                                          fontWeight: FontWeight.bold),
                                     ),
-                                    Text(
-                                      'ACTIVE: ' +
-                                          countryData[index]['active']
-                                              .toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                    Text(
-                                      'RECOVERED: ' +
-                                          countryData[index]['recovered']
-                                              .toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                    Text(
-                                      'DEATHS: ' +
-                                          countryData[index]['deaths']
-                                              .toString(),
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context).brightness ==
-                                                Brightness.dark
-                                            ? Colors.grey[100]
-                                            : Colors.grey[900],
-                                      ),
-                                    ),
+                                    Image.network(
+                                      countryData[index]['countryInfo']['flag'],
+                                      height: 50.0,
+                                      width: 60.0,
+                                    )
                                   ],
                                 ),
                               ),
-                            )
-                          ],
+                              Expanded(
+                                child: Container(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        'CONFIRMED: ' +
+                                            countryData[index]['cases']
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      Text(
+                                        'ACTIVE: ' +
+                                            countryData[index]['active']
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                      Text(
+                                        'RECOVERED: ' +
+                                            countryData[index]['recovered']
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green,
+                                        ),
+                                      ),
+                                      Text(
+                                        'DEATHS: ' +
+                                            countryData[index]['deaths']
+                                                .toString(),
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Theme.of(context).brightness ==
+                                                  Brightness.dark
+                                              ? Colors.grey[100]
+                                              : Colors.grey[900],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-            ),
+                      );
+                    }),
+              ),
+      ),
     );
   }
 }
